@@ -1,0 +1,52 @@
+tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+
+        .passbook {
+          border: 1px solid #eee;
+        }
+
+        .passbook tr {
+            font-size: 12px;
+        }
+        .passbook td {
+          padding: 10px 30px;
+          font-size: 15px;
+          line-height: 18px;
+        }
+
+        .passbook thead {
+          background: #24689a;
+        }
+        .passbook thead th {
+          color: #fff;
+          padding: 10px 30px;
+        }
+
+        .passbook {
+            border: 1px solid #eee;
+            padding: 5px;
+            box-shadow: 1px 3px 5px #dcdcdc;
+        }
+.info thead th {
+          color: #24689a;
+          padding: 10px 30px;
+          font-size: 14px;
+        }
+
+        .info thead td {
+          color: #000;
+          font-size: 13px;
+          padding: 10px 5px;
+          font-weight: bold;
+        }
+
+#dow {
+  max-width: 190px;
+}
+
+
+.title-sub-header {
+ font-weight: bold;
+ font-size: 16px;
+}
