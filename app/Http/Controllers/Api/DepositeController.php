@@ -15,7 +15,7 @@ class DepositeController extends Controller
     {
 
         $user = auth()->user();
-
+        // dd("ok");
         $data = $this->prepareDataForCreate($request);
 
         try {
@@ -60,7 +60,7 @@ class DepositeController extends Controller
             'deposite_amount'  => $row["deposite_amount"],
             'member_name'      => $row["member_name"],
             'member_id'        => $row["member_id"],
-            'deposite'         => $row["deposite"],
+            'deposite'         => $row["deposite"] ?? "",
             'lo_id'            => $user->id,
             'collected_by'     => $row["collected_by"],
             'collected_date'        => $row["collected_date"],
