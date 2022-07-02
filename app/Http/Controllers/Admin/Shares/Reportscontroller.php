@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Shares;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\atcbdt;
+use App\Models\Admin\atcbhd08;
 use App\Models\Admin\eomaster;
 use App\Models\Admin\dbo_loanapplication;
 use App\Models\Admin\membermaster;
@@ -270,6 +272,16 @@ class Reportscontroller extends Controller
                     ->groupBy('EOId')->get();
         }
         return view('admin.reports.Lo.lowise_deposit',compact('lo','amount','ddcoll','rdcoll','flag','fromdate','todate'));
+    }
+
+    public function YlyIntReport(Request $request)
+    {
+        $date=date('Y-m-d');
+        if($request->has('search_date')){
+            $date=$request->search_date;
+        }
+        $dailyInt=atcbdt::where('DescId','G0008')->where(DB::raw("str_to_date(VoucherDt, '%Y-%m-%d')"),$date)->get();
+        return view('admin.reports.yearly-int-report',compact('dailyInt'));
     }
 
 }

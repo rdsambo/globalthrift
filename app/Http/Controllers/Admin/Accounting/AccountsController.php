@@ -40,7 +40,7 @@ class AccountsController extends Controller
                             ->selectRaw("sum(CASE WHEN DrCr='D' THEN Amt ELSE 0 END) as totaldr,
                                        sum(CASE WHEN DrCr='C' THEN Amt ELSE 0 END) as totalcr,VoucherDt,acgenled.Desc,acgenled.DescId")
                             ->get();
-        // dd($summary);
+        // dd($summary)
         $drAmt=atcbdt::where(DB::raw("str_to_date(VoucherDt, '%Y-%m-%d')"),'<',$fromdate)->where('DrCr','D')
                         ->selectRaw('sum(Amt) as totalamt')->first();
         $crAmt=atcbdt::where(DB::raw("str_to_date(VoucherDt, '%Y-%m-%d')"),'<',$fromdate)->where('DrCr','C')

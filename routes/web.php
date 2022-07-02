@@ -221,7 +221,8 @@ Route::group(['middleware' => ['auth.admin']], function () {
         Route::get('lowisedeposit',['as'    =>  'lowisedeposit','uses' => 'Admin\Shares\Reportscontroller@LoWiseDeposit']);
         Route::get('viewperlo/{id}',['as'    =>  'viewperlo','uses' => 'Admin\Shares\Reportscontroller@PerLo']);
 
-        Route::get('viewperlo/{id}',['as'    =>  'viewperlo','uses' => 'Admin\Shares\Reportscontroller@PerLo']);
+
+        Route::get('ylyintreport',['as'    =>  'ylyintreport','uses' => 'Admin\Shares\Reportscontroller@YlyIntReport']);
     });
 });
 

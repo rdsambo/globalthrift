@@ -57,7 +57,7 @@ class HomeController extends Controller
                 accountmaster::where('AccountId',$Int->AccountId)->update(['tempstatus'=>1]);
             }
             // voucher Entry
-            $naration='Being the amt of '.$atype.' Yearly Interest Provided for '.$request->AccountName;
+            $naration='Being the amt of '.$atype.' Yearly Interest Provided for '.$Int->AccountName;
             $descid=['atcbhd08'=>'C0001', 'atcbdt'=>$descid];
             $voucharno= \App\Helpers\Helper::InsertInto_atcbhd08($Int->AccountId,$yearlyint,$naration,'C','C',$atype,$descid);
             // ends voucher

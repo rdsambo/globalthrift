@@ -73,7 +73,7 @@
                                                 <label>Date of Deposit</label>
                                             </div>
                                             <div class="form-group col-md-2" >
-                                                <input type="text" class="form-control" class="form-control" name="doc" id="doc" value="{{date("Y-m-d")}}">
+                                                <input type="text" class="form-control" name="doc" id="doc" value="{{date("Y-m-d")}}">
                                             </div>
                                         </div>
 

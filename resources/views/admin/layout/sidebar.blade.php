@@ -194,6 +194,9 @@
                                 <li>
                                     <a href="{{route('admin.loanreports')}}">All Loan Reports</a>
                                 </li>
+                                <li>
+                                    <a href="{{route('admin.ylyintreport')}}">Yearly Interest Report</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
