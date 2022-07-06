@@ -247,6 +247,9 @@
 
 
                             </table>
+                            @if ($temp_deposite)
+                                {{ $temp_deposite->appends(request()->all()) }}
+                            @endif
                             <div class="row col-md-6 ">
                                 <div class="container">
                                     <caption><h2><b>#Total transfer amount:</b></h2> </caption><caption><b><h2 id="total_transfer"></h2></b></caption>
