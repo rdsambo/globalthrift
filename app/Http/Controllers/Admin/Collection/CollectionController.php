@@ -44,7 +44,9 @@ class CollectionController extends Controller
 
     public function store(Request $request)
     {
+        // dd("ok");
         $lenght = count($request->id);
+        // dd($lenght);
         for ($i = 0; $i < $lenght; $i++) {
 
             $value = TempDeposite::where('id', $request->id[$i])->first();
@@ -65,34 +67,40 @@ class CollectionController extends Controller
 
                 $memberdetails = accountmaster::where('accountid', $account_details->AccountId)->first();
                 // dump($memberdetails->AccountName);
-                $mnextslno  = atcbhd08::selectRaw('max(lslno) + 1 as nextslno')->first();
-                $acct       = str_pad($mnextslno->nextslno, 7, '0', STR_PAD_LEFT);
-                $fnyr       = explode("-", Helper::getFinYear()->finyear);
-                $fyr1       = substr($fnyr[0], 2, 2);
-                $voucherno  = 'C/111-' . $acct . "/" . $fyr1 . "-" . $fnyr[1];
-                $headid     = atcbhd08::selectRaw('max(SUBSTRING_INDEX(HeadId, "-" , -1)) + 1 as nextheadid')->first();
-                $nextheadid = '111-' . str_pad($headid->nextheadid, 8, 0, STR_PAD_LEFT);
+                // $mnextslno  = atcbhd08::selectRaw('max(lslno) + 1 as nextslno')->first();
+                // $acct       = str_pad($mnextslno->nextslno, 7, '0', STR_PAD_LEFT);
+                // $fnyr       = explode("-", Helper::getFinYear()->finyear);
+                // $fyr1       = substr($fnyr[0], 2, 2);
+                // $voucherno  = 'C/111-' . $acct . "/" . $fyr1 . "-" . $fnyr[1];
+                // $headid     = atcbhd08::selectRaw('max(SUBSTRING_INDEX(HeadId, "-" , -1)) + 1 as nextheadid')->first();
+                // $nextheadid = '111-' . str_pad($headid->nextheadid, 8, 0, STR_PAD_LEFT);
 
-                $datavoucher = [
-                    'HeadId'    => $nextheadid,
-                    'TType'     => 'C',
-                    'VoucherNo' => $voucherno,
-                    'Amt'       => $request->amt,
-                    'DC'        => 'D',
-                    'DescId'    => 'C0001',
-                    'RefType'   => 'DC',
-                    'ReffId'    => $account_details->AccountId . "-" . $nextslno->nextslno,
-                    'Narration' => 'Being the amt of Daily Deposit received from ' . $account_details->AccountId,
-                    'IntNo'     => 0,
-                    'finyear'   => Helper::getFinYear()->finyear,
-                    'lslno'     => $mnextslno->nextslno,
-                ];
+                // $datavoucher = [
+                //     'HeadId'    => $nextheadid,
+                //     'TType'     => 'C',
+                //     'VoucherNo' => $voucherno,
+                //     'Amt'       => $request->amt,
+                //     'DC'        => 'D',
+                //     'DescId'    => 'C0001',
+                //     'RefType'   => 'DC',
+                //     'ReffId'    => $account_details->AccountId . "-" . $nextslno->nextslno,
+                //     'Narration' => 'Being the amt of Daily Deposit received from ' . $account_details->AccountId,
+                //     'IntNo'     => 0,
+                //     'finyear'   => Helper::getFinYear()->finyear,
+                //     'lslno'     => $mnextslno->nextslno,
+                // ];
 
                 $result = ddcollection::create($data);
 
-                if ($result) {
-                    atcbhd08::create($datavoucher);
-                }
+                // if ($result) {
+                //     atcbhd08::create($datavoucher);
+                // }
+
+                $naration='Being the amt of Daily Deposit received from ' . $account_details->AccountName.($account_details->AccountId);
+                $descid=['atcbhd08'=>'C0001', 'atcbdt'=>'C0001'];
+                $voucharno= \App\Helpers\Helper::InsertInto_atcbhd08($account_details->AccountId,$request->amt,$naration,'C','D','DC',$descid);
+
+
                 TempDeposite::where('id', $request->id[$i])->update(['transfer_status' => 1]);
             } else {
 
@@ -111,32 +119,34 @@ class CollectionController extends Controller
 
                 $memberdetails = accountmaster::where('accountid', $account_details->AccountId)->first();
                 // dump($memberdetails->AccountName);
-                $mnextslno  = atcbhd08::selectRaw('max(lslno) + 1 as nextslno')->first();
-                $acct       = str_pad($mnextslno->nextslno, 7, '0', STR_PAD_LEFT);
-                $fnyr       = explode("-", Helper::getFinYear()->finyear);
-                $fyr1       = substr($fnyr[0], 2, 2);
-                $voucherno  = 'C/111-' . $acct . "/" . $fyr1 . "-" . $fnyr[1];
-                $headid     = atcbhd08::selectRaw('max(SUBSTRING_INDEX(HeadId, "-" , -1)) + 1 as nextheadid')->first();
-                $nextheadid = '111-' . str_pad($headid->nextheadid, 8, 0, STR_PAD_LEFT);
+                // $mnextslno  = atcbhd08::selectRaw('max(lslno) + 1 as nextslno')->first();
+                // $acct       = str_pad($mnextslno->nextslno, 7, '0', STR_PAD_LEFT);
+                // $fnyr       = explode("-", Helper::getFinYear()->finyear);
+                // $fyr1       = substr($fnyr[0], 2, 2);
+                // $voucherno  = 'C/111-' . $acct . "/" . $fyr1 . "-" . $fnyr[1];
+                // $headid     = atcbhd08::selectRaw('max(SUBSTRING_INDEX(HeadId, "-" , -1)) + 1 as nextheadid')->first();
+                // $nextheadid = '111-' . str_pad($headid->nextheadid, 8, 0, STR_PAD_LEFT);
 
-                $datavoucher = [
-                    'HeadId'        =>  $nextheadid,
-                    'TType'         =>  'C',
-                    'VoucherNo'     =>  $voucherno,
-                    'Amt'           =>  $request->amt,
-                    'DC'            =>  'M',
-                    'DescId'        =>  'C0001',
-                    'RefType'       =>  'MC',
-                    'ReffId'        =>  $request->accntno . "-" . $nextslno->nextslno,
-                    'Narration'     => 'Being the amt of Daily Deposit received from ' . $request->accntno,
-                    'IntNo'         =>  0,
-                    'finyear'       =>  Helper::getFinYear()->finyear,
-                    'lslno'         =>  $mnextslno->nextslno,
-                ];
+                // $datavoucher = [
+                //     'HeadId'        =>  $nextheadid,
+                //     'TType'         =>  'C',
+                //     'VoucherNo'     =>  $voucherno,
+                //     'Amt'           =>  $request->amt,
+                //     'DC'            =>  'M',
+                //     'DescId'        =>  'C0001',
+                //     'RefType'       =>  'MC',
+                //     'ReffId'        =>  $request->accntno . "-" . $nextslno->nextslno,
+                //     'Narration'     => 'Being the amt of Daily Deposit received from ' . $request->accntno,
+                //     'IntNo'         =>  0,
+                //     'finyear'       =>  Helper::getFinYear()->finyear,
+                //     'lslno'         =>  $mnextslno->nextslno,
+                // ];
 
                 $result = rdcollection::create($data);
                 if ($result) {
-                    atcbhd08::create($datavoucher);
+                    $naration='Being the amt of Monthly Deposit received from ' . $account_details->AccountName.($account_details->AccountId);
+                    $descid=['atcbhd08'=>'C0001', 'atcbdt'=>'C0001'];
+                    $voucharno= \App\Helpers\Helper::InsertInto_atcbhd08($account_details->AccountId,$request->amt,$naration,'C','D','DC',$descid);
                 }
                 TempDeposite::where('id', $request->id[$i])->update(['transfer_status' => 1]);
 
